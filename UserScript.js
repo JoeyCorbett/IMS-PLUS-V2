@@ -55,13 +55,28 @@
         {
             const Accounts_button = document.querySelector('a[href="/ng/accounts"].mantine-focus-never.i-root-iHDUF.m-f0824112.mantine-NavLink-root.m-87cf2631.mantine-UnstyledButton-root');
             if (Accounts_button)
-                Accounts_button.click();
+                Accounts_button.click();     
+        }
+    }
+
+    function search(event)
+    {
+        if (event.altKey && event.key === 's')
+        {
+            // Dark Mode
+            const search_button = document.querySelector('button[data-variant="default"][data-size="lg"][aria-label="Search"]');
+            if (search_button)
+                search_button.click();
+            const input_field = document.querySelector('.ims-sel__input-container.css-n9qnu9')
+            if (input_field)
+                input_field.focus();
         }
     }
 
     document.addEventListener('keydown', resolveAndReopenTicket);
     document.addEventListener('keydown', selectCommentBox);
     document.addEventListener('keydown', SelectAccounts);
+    document.addEventListener('keydown', search);
 })();
 
 
