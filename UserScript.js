@@ -1,85 +1,77 @@
 // ==UserScript==
-// @name         IMS+ V2
+// @name         IMS+ v0.2
 // @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  Provides functionality to IMS 
+// @version      0.1.0
+// @description  Provides functionality to IMS including Shortcuts/Visual Improvements
 // @author       JoeyCorbett
 // @author       TylerMong
 // @match        https://ims.stockton.edu/*
 // @require      https://cdn.jsdelivr.net/npm/sweetalert2@10
 // @require      https://kit.fontawesome.com/f54d2a88b1.js
-// @downloadURL  https://github.com/JoeyCorbett/IMS-PLUS/blob/main/Main%20Script.js
-// @updateURL    https://github.com/JoeyCorbett/IMS-PLUS/blob/main/Main%20Script.js
 // @grant        none
 // ==/UserScript==
 
-// SHORTCUTS
+// GUI
 (function ()
 {
-    'use strict'
-
-    function resolveAndReopenTicket(event)
+    function addButton()
     {
-        if (event.ctrlKey && event.key === 'Enter')
+        const buttonPanel = document.querySelector("#root > div > nav")
+        if (buttonPanel)
         {
-            const ResolveButton = document.querySelectorAll('button.mantine-focus-never.mantine-active.m-77c9d27d.mantine-Button-root.m-87cf2631.mantine-UnstyledButton-root');
-            ResolveButton.forEach(button =>
-            {
-                button.click();
-            });
-        }
-        if (event.ctrlKey && event.key === 'Enter')
-        {
-            const ReOpenButton = document.querySelectorAll('button.mantine-focus-never.mantine-active.m-77c9d27d.mantine-Button-root.m-87cf2631.mantine-UnstyledButton-root');
-            ReOpenButton.forEach(button =>
-            {
-                button.click();
-            });
+            const imsPlusButton = document.createElement("a")
+            const imsPlusButtonIcon = document.createElement("span")
+            const imsPlusButtonText = document.createElement("div")
+
+            buttonPanel.appendChild(imsPlusButton)
+
+            imsPlusButton.className = "mantine-focus-never i-root-iHDUF m-f0824112 mantine-NavLink-root m-87cf2631 mantine-UnstyledButton-root"
+            imsPlusButton.href = "/ng/ims-plus-dashboard"
+            imsPlusButton.appendChild(imsPlusButtonIcon)
+            imsPlusButton.appendChild(imsPlusButtonText)
+
+            imsPlusButtonIcon.className = "i-section-hng4R m-690090b5 mantine-NavLink-section"
+            imsPlusButtonIcon.setAttribute("data-position", "left")
+            imsPlusButtonIcon.innerHTML = "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-device-desktop-plus\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" stroke=\"currentcolor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n" +
+                "  <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/>\n" +
+                "  <path d=\"M13.5 16h-9.5a1 1 0 0 1 -1 -1v-10a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v7.5\" />\n" +
+                "  <path d=\"M7 20h5\" />\n" +
+                "  <path d=\"M9 16v4\" />\n" +
+                "  <path d=\"M16 19h6\" />\n" +
+                "  <path d=\"M19 16v6\" />\n" +
+                "</svg>"
+
+            imsPlusButtonText.className = "m-f07af9d2 mantine-NavLink-body"
+            imsPlusButtonText.innerHTML = "<span class=\"m-1f6ac4c4 mantine-NavLink-label\">IMS+</span>"
+            imsPlusButtonText.innerHTML += "<span class=\"m-57492dcc mantine-NavLink-description\"></span>"
         }
     }
 
-    function selectCommentBox(event)
+    function buildDashboard()
     {
-        if (event.ctrlKey && event.key === '\\')
+        if (window.location.href === "https://ims.stockton.edu/ng/ims-plus-dashboard")
         {
-            // Dark Mode
-            const textarea_dark = document.querySelector('.m-8fb7ebe7.mantine-Input-input.mantine-Textarea-input');
-            if (textarea_dark)
-                textarea_dark.select();
+            clearPage()
+            buildHome()
         }
     }
 
-    function SelectAccounts(event)
+    function clearPage()
     {
-        if (event.altKey && event.key === 'a')
-        {
-            const Accounts_button = document.querySelector('a[href="/ng/accounts"].mantine-focus-never.i-root-iHDUF.m-f0824112.mantine-NavLink-root.m-87cf2631.mantine-UnstyledButton-root');
-            if (Accounts_button)
-                Accounts_button.click();     
-        }
+        document.body.innerHTML = ""
     }
 
-    function search(event)
+    // reads home.html and injects it into the body
+    function buildHome()
     {
-        if (event.altKey && event.key === 's')
-        {
-            // Dark Mode
-            const search_button = document.querySelector('button[data-variant="default"][data-size="lg"][aria-label="Search"]');
-            if (search_button)
-                search_button.click();
-            const input_field = document.querySelector('.ims-sel__input-container.css-n9qnu9')
-            if (input_field)
-                input_field.focus();
-        }
+        fetch("https://raw.githubusercontent.com/JoeyCorbett/IMS-Plus/main/home.html")
+            .then(response => response.text())
+            .then(data => {
+                document.body.innerHTML = data
+            })
     }
 
-    document.addEventListener('keydown', resolveAndReopenTicket);
-    document.addEventListener('keydown', selectCommentBox);
-    document.addEventListener('keydown', SelectAccounts);
-    document.addEventListener('keydown', search);
+    setTimeout(addButton, 1000)
+    buildDashboard()
+
 })();
-
-
-// GUI
-
-// Visual Tweaks
