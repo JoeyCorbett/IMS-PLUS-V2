@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         IMS+ v0.2
+// @name         IMS+ v2
 // @namespace    http://tampermonkey.net/
 // @version      0.1.0
 // @description  Provides functionality to IMS including Shortcuts/Visual Improvements
