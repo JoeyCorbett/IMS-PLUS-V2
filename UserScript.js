@@ -64,7 +64,7 @@
     // reads home.html and injects it into the body
     function buildHome()
     {
-        fetch("https://raw.githubusercontent.com/JoeyCorbett/IMS-Plus/main/home.html")
+        fetch("https://raw.githubusercontent.com/JoeyCorbett/IMS-PLUS-V2/experimental/Home.html")
             .then(response => response.text())
             .then(data => {
                 document.body.innerHTML = data
